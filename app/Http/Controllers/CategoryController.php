@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryCreatePostRequest;
+use App\Http\Requests\CategoryStatusPostRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.categories', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -32,9 +37,15 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryCreatePostRequest $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->name;
+        $category->bcolor = $request->bcolor;
+        $category->active = 1;
+        $category->save();
+        // todo message
+        return redirect()->route('admin.categories');
     }
 
 
@@ -46,6 +57,32 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+
+        return redirect()->route('admin.categories');
+    }
+
+    public function enable(CategoryStatusPostRequest $request){
+        /*
+         * // Moved to private changeCategoryStatus function
+        $category = Category::find($request->id);
+        $category->active = 1;
+        $category->save();
+        */
+        $this->changeCategoryStatus($request->id, 1);
+        return redirect()->route('admin.categories');
+    }
+
+    public function disable(CategoryStatusPostRequest $request){
+        $this->changeCategoryStatus($request->id, 0);
+        return redirect()->route('admin.categories');
+    }
+
+    private function changeCategoryStatus($id, $status){
+        $category = Category::find($id);
+        $category->active = $status;
+        return $category->save();
+
     }
 }
