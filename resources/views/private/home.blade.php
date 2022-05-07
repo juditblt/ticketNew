@@ -12,11 +12,11 @@
     <h2>Hibajegyeid</h2>
     <table>
         <tr>
-            <td>Id</td>
-            <td>Prioritás</td>
-            <td>Kategória</td>
-            <td>Leírás</td>
-            <td>Bejelentés ideje</td>
+            <th>Id</th>
+            <th>Prioritás</th>
+            <th>Kategória</th>
+            <th>Leírás</th>
+            <th>Bejelentés ideje</th>
         </tr>
         @forelse($tickets as $ticket)
             <tr>

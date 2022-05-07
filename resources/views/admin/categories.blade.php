@@ -9,10 +9,10 @@
     <h2>Kategóriák</h2>
     <table>
         <tr>
-            <td>Név</td>
-            <td>Szín</td>
-            <td>Aktív</td>
-            <td></td>
+            <th>Név</th>
+            <th>Szín</th>
+            <th>Aktív</th>
+            <th></th>
         </tr>
         @forelse($categories as $category)
             <tr>

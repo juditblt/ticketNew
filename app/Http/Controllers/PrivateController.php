@@ -18,7 +18,8 @@ class PrivateController extends Controller
         //nézet visszadása
         return view('private.home', [
             'tickets' => $tickets,
-            'categories' => Category::all()
+            //'categories' => Category::all()
+            'categories' => Category::where('active', 1)->get()
         ]);
     }
 
