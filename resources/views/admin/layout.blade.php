@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>Ticket rendszer</h1>
+<h1>Ticket rendszer - Admin</h1>
 
 @section('content')
     Admin oldal tartalma...

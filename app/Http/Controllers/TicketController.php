@@ -38,6 +38,15 @@ class TicketController extends Controller
         ]);
     }
 
+    public function status($id, $status){
+        if (!in_array($status, ['received', 'working', 'solved']))
+            return redirect()->route('admin.tickets.show', ['id'=>$id]);
+
+        $ticket = Ticket::find($id);
+        $ticket->status = $status;
+        $ticket->save();
+        return redirect()->route('admin.tickets.show', ['id'=>$id]);
+    }
 
     /**
      * Remove the specified resource from storage.

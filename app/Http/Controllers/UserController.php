@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserDestroyPostRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.users', [
+            'users' => User::all()
+        ]);
     }
 
     /**
@@ -33,8 +37,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(UserDestroyPostRequest $request)
     {
-        //
+        $user = User::find($request->id);
+        $user->delete();
+        return redirect()->route('admin.users');
     }
 }
