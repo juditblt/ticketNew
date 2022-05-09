@@ -2,11 +2,6 @@
 
 @section('content')
 
-    <form action="{{ route('logout') }}" method="post">
-        @csrf
-        <input type="submit" value="Kilépés">
-    </form>
-
     <hr>
 
     <h2>Hibajegyeid</h2>

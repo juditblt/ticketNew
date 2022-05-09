@@ -9,7 +9,12 @@
 </head>
 <body>
 
-<h1>Ticket rendszer</h1>
+<h1>Ticket rendszer - Publikus</h1>
+
+<form action="{{ route('logout') }}" method="post">
+    @csrf
+    <input type="submit" value="Kilépés">
+</form>
 
 @section('content')
     Public oldal tartalma...

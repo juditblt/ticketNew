@@ -9,7 +9,12 @@
 </head>
 <body>
 
-<h1>Ticket rendszer</h1>
+<h1>Ticket rendszer - Privát</h1>
+
+<form action="{{ route('logout') }}" method="post">
+    @csrf
+    <input type="submit" value="Kilépés">
+</form>
 
 @section('content')
     Private oldal tartalma...

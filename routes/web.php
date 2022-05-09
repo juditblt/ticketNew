@@ -30,40 +30,37 @@ Route::get('/home', [PrivateController::class, 'home'])->name('private.home')
 Route::post('/store', [PrivateController::class, 'store'])->name('private.ticket.store')
     ->middleware('auth');
 
-Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories')
-    ->middleware('auth');
-Route::post('/admin/categories/store', [CategoryController::class, 'store'])->name('admin.categories.store')
-    ->middleware('auth');
+Route::prefix('admin')->name('admin')->middleware('role:admin')->group(function (){
 
-Route::post('/admin/categories/destroy/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy')
-    ->middleware('auth');
+    Route::get('', function (){
+        return 'Admin site...';
+    })->name('');
 
-Route::post('/admin/categories/enable', [CategoryController::class, 'enable'])->name('admin.categories.enable')
-    ->middleware('auth');
-Route::post('/admin/categories/disable', [CategoryController::class, 'disable'])->name('admin.categories.disable')
-    ->middleware('auth');
+    Route::prefix('/categories')->name('.categories')->controller(CategoryController::class)->group(function (){
+        Route::get('','index')->name('');
+        Route::post('/store','store')->name('.store');
+        Route::post('/destroy/{id}','destroy')->name('.destroy');
+        Route::post('/enable','enable')->name('.enable');
+        Route::post('/disable','disable')->name('.disable');
+    });
 
-Route::get('/admin/tickets', [TicketController::class, 'index'])
-    ->name('admin.tickets')->middleware('auth');
-Route::get('/admin/tickets/show/{id}', [TicketController::class, 'show'])
-    ->name('admin.tickets.show')->middleware('auth');
+    Route::prefix('/tickets')->name('.tickets')->controller(TicketController::class)->group(function () {
+        Route::get('','index')->name('');
+        Route::get('/show/{id}','show')->name('.show');
 
-Route::get('/admin/tickets/status/{id}/{status}', [TicketController::class, 'status'])
-    ->name('admin.tickets.status')->middleware('auth');
+        Route::get('/status/{id}/{status}','status')->name('.status');
 
-Route::post('/admin/tickets/destroy', [TicketController::class, 'destroy'])
-    ->name('admin.tickets.destroy')->middleware('auth');
-Route::post('/admin/tickets/revert', [TicketController::class, 'revert'])
-    ->name('admin.tickets.revert')->middleware('auth');
-Route::post('/admin/tickets/permanent', [TicketController::class, 'permanent'])
-    ->name('admin.tickets.permanent')->middleware('auth');
+        Route::post('/destroy', 'destroy')->name('.destroy');
+        Route::post('/revert','revert')->name('.revert');
+        Route::post('/permanent','permanent')->name('.permanent');
+    });
 
-Route::get('/admin/users', [UserController::class, 'index'])
-    ->name('admin.users')->middleware('auth');
-Route::post('/admin/users/destroy', [UserController::class, 'destroy'])
-    ->name('admin.users.destroy')->middleware('auth');
-Route::post('/admin/users/promote', [UserController::class, 'promote'])
-    ->name('admin.users.promote')->middleware('auth');
+    Route::prefix('/users')->name('.users')->controller(UserController::class)->group(function () {
+        Route::get('', 'index')->name('');
+        Route::post('/destroy','destroy')->name('.destroy');
+        Route::post('/promote', 'promote')->name('.promote');
+    });
+});
 
 /*
 Route::get('/dashboard', function () {

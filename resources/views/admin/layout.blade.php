@@ -11,6 +11,17 @@
 
 <h1>Ticket rendszer - Admin</h1>
 
+<form action="{{ route('logout') }}" method="post">
+    @csrf
+    <input type="submit" value="Kilépés">
+</form>
+
+@if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+    <a href="{{ route('admin') }}">
+        Admin Home
+    </a>
+@endif
+
 @section('content')
     Admin oldal tartalma...
 @show

@@ -6,6 +6,7 @@
         <li>
             Név: {{ $user->name }} <br>
             E-mail: {{ $user->email }} <br>
+            Szerep: {{ $user->role }} <br>
             <form action="{{ route('admin.users.destroy') }}" method="post">
                 @csrf
                 <input type="hidden" name="id" value="{{ $user->id }}">
